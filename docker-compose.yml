@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  postgres:
+    # Image maintained by RapidFort (includes security hardening)
+    image: rapidfort/postgresql-official:17.9-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dataplatform
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+
+      # requires: tzdata on host machine
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+      - /etc/localtime:/etc/localtime:ro
+    # For local development only. Remove or restrict in production.
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d dataplatform || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - backend
+
+  # Examples of other services (kept commented for reference):
+  # azurite:
+  #   image: mcr.microsoft.com/azure-storage/azurite
+  #   ports:
+  #     - "10000:10000"   # blob
+  #     - "10001:10001"   # queue (if needed later)
+  #   volumes:
+  #     - azurite_data:/data
+  #   command: azurite --blobHost 0.0.0.0
+
+  # grafana:
+  #   image: grafana/grafana
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     GF_SECURITY_ADMIN_PASSWORD: admin
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  backend:
+    driver: bridge
+
+secrets:
+  postgres_password:
+    file: .secrets/postgres_password

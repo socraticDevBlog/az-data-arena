@@ -1,4 +1,11 @@
-# Byte-compiled / optimized / DLL files
+# Ignore local secret files
+/.secrets/postgres_password
+
+# Common ignores (add as needed)
+*.pyc
+__pycache__/
+node_modules/
+.env# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
