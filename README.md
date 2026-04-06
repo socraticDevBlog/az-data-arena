@@ -42,12 +42,16 @@ make
 
 ### grafana visualization
 
+#### what was done and ready to use
+
 from "Sleep_health_and_lifestyle_dataset" found on <kaggle.com>
 
-import it in a `postgresql` database
+imported it in a `postgresql` database
 
-plug a `grafana` instance to that database and use a `xy` visualization to
+plugged a `grafana` instance to that database and used a `xy` visualization to
 illustrate the correlation between blood pressure, body mass index and sleep quality
+
+#### run it on your machine
 
 1. browse to <http://localhost:3000/d/adt2xfj/health-visualization?orgId=1>
 2. log in as `user`:`admin` and `password`:`admin`
