@@ -1,5 +1,5 @@
 # Ignore local secret files
-/.secrets/postgres_password
+/.secrets/**
 
 # Common ignores (add as needed)
 *.pyc
