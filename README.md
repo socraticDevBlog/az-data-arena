@@ -60,3 +60,6 @@ illustrate the correlation between blood pressure, body mass index and sleep qua
 
 ![Grafana dashboard showing the correlation between body mass, blood pressure
 and quality of sleep](grafana-health-sleep.png "As Blood Pressure Rises, Sleep Quality Falls")
+
+![Grafana dashboard showing the correlation between time spent on social media
+and mental health](grafana-social-mental-health.png "Relationship Between Usage Hours and Mental Health")

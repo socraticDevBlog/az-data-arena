@@ -1739,3 +1739,17 @@ ON CONFLICT ("Student_ID") DO NOTHING;   -- idempotent: skip duplicates on re-ru
 GRANT USAGE ON SCHEMA socials TO app;
 GRANT SELECT, INSERT, UPDATE, DELETE
     ON socials.impact_social_media_health TO app;
+
+CREATE OR REPLACE VIEW socials.v_mental_health_analysis AS
+SELECT
+    "Student_ID",
+    "Avg_Daily_Usage_Hours",
+    "Mental_Health_Score",
+    CASE 
+        WHEN "Mental_Health_Score" >= 8 THEN 'High'
+        WHEN "Mental_Health_Score" >= 5 THEN 'Medium'
+        ELSE 'Low'
+    END AS score_category
+FROM socials.impact_social_media_health
+WHERE "Mental_Health_Score" IS NOT NULL
+  AND "Avg_Daily_Usage_Hours" IS NOT NULL;
