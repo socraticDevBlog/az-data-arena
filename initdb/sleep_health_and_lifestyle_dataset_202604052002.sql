@@ -409,3 +409,12 @@ ON CONFLICT ("Person_ID") DO NOTHING;   -- idempotent: skip duplicates on re-run
 GRANT USAGE ON SCHEMA health TO app;
 GRANT SELECT, INSERT, UPDATE, DELETE
     ON health.sleep_health_and_lifestyle_dataset TO app;
+
+CREATE VIEW health.view_sleep_bp AS
+SELECT
+    "Person_ID",
+    "Quality of Sleep",
+    "BMI Category",
+    SPLIT_PART("Blood Pressure", '/', 1)::SMALLINT AS systolic,
+    SPLIT_PART("Blood Pressure", '/', 2)::SMALLINT AS diastolic
+FROM health.sleep_health_and_lifestyle_dataset;
