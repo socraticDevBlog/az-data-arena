@@ -7,7 +7,7 @@ SECRET_FILE := $(SECRET_DIR)/postgres_password
 
 help:
 	@echo "Makefile targets:"
-	@echo "  up         - create secret (if missing) and docker compose up -d"
+	@echo "  up         - docker compose up -d"
 	@echo "  down       - docker compose down and remove all volumes"
 	@echo "  restart    - docker compose restart"
 	@echo "  logs       - follow postgres logs"
