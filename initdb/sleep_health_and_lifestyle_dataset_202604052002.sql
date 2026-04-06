@@ -410,11 +410,19 @@ GRANT USAGE ON SCHEMA health TO app;
 GRANT SELECT, INSERT, UPDATE, DELETE
     ON health.sleep_health_and_lifestyle_dataset TO app;
 
-CREATE VIEW health.view_sleep_bp AS
+-- Drop and recreate the view with a numeric BMI rank
+CREATE OR REPLACE VIEW health.view_sleep_bp AS
 SELECT
     "Person_ID",
     "Quality of Sleep",
     "BMI Category",
     SPLIT_PART("Blood Pressure", '/', 1)::SMALLINT AS systolic,
-    SPLIT_PART("Blood Pressure", '/', 2)::SMALLINT AS diastolic
+    SPLIT_PART("Blood Pressure", '/', 2)::SMALLINT AS diastolic,
+    CASE "BMI Category"
+        WHEN 'Normal'        THEN 1
+        WHEN 'Normal Weight' THEN 1
+        WHEN 'Overweight'    THEN 2
+        WHEN 'Obese'         THEN 3
+    END AS bmi_rank,
+    NOW() AS recorded_at    -- dummy timestamp so Grafana is happy
 FROM health.sleep_health_and_lifestyle_dataset;

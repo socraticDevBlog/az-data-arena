@@ -1,0 +1,262 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PCC52D03280B7034C"
+      },
+      "description": "🟢 Green = Excellent sleep (8+)  \n🟡 Yellow = Moderate sleep (6-7)  \n🟠 Orange = Poor sleep (5)  \n🔴 Red = Very poor sleep (<5)  \nBubble size = BMI rank\n\nIt is suitable for:\n\nExploratory Data Analysis (EDA)\n\nData visualization and pattern discovery\n\nCorrelation and trend analysis\n\nMachine learning models for prediction (e.g., sleep disorders)\n\nThe dataset can help uncover how lifestyle choices influence sleep quality and identify potential factors contributing to sleep-related issues",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "systolic pressure",
+            "axisPlacement": "left",
+            "fillOpacity": 50,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "pointShape": "circle",
+            "pointSize": {
+              "fixed": 5,
+              "max": 60,
+              "min": 20
+            },
+            "pointStrokeWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "show": "points"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 4
+              },
+              {
+                "color": "yellow",
+                "value": 6
+              },
+              {
+                "color": "green",
+                "value": 8
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "diastolic"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "systolic",
+              "scope": "series"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "systolic pressure (mmHg)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "diastolic",
+              "scope": "series"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "diastolic pressure (mmHg)"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mapping": "auto",
+        "series": [
+          {
+            "color": {
+              "matcher": {
+                "id": "byName",
+                "options": "Quality of Sleep"
+              }
+            },
+            "size": {
+              "matcher": {
+                "id": "byName",
+                "options": "bmi_rank"
+              }
+            },
+            "x": {
+              "matcher": {
+                "id": "byName",
+                "options": "systolic"
+              }
+            },
+            "y": {
+              "matcher": {
+                "id": "byName",
+                "options": "diastolic"
+              }
+            }
+          }
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "13.0.0-23943897787",
+      "targets": [
+        {
+          "dataset": "dataplatform",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "afi83v232dm9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    systolic,\r\n    diastolic,\r\n    \"Quality of Sleep\",\r\n    bmi_rank\r\nFROM health.view_sleep_bp\r\nORDER BY systolic;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "As Blood Pressure Rises, Sleep Quality Falls",
+      "type": "xychart"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 16,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# Legend - As Blood Pressure Rises, Sleep Quality Falls\n\n**Bubble Color — Quality of Sleep**\n🟢 &nbsp; 8–10 &nbsp; Excellent\n🟡 &nbsp; 6–7 &nbsp;&nbsp; Moderate  \n🟠 &nbsp; 5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Poor\n🔴 &nbsp; Below 5 &nbsp; Very Poor\n\n**Bubble Size — BMI Category**\n⬤ &nbsp; Small = Normal weight\n⬤ &nbsp; Large = Overweight / Obese",
+        "mode": "markdown"
+      },
+      "pluginVersion": "13.0.0-23943897787",
+      "title": "legend",
+      "type": "text"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-10y",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "browser",
+  "title": "health visualization",
+  "uid": "adt2xfj",
+  "version": 1,
+  "weekStart": ""
+}

@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   postgres:
     # Image maintained by RapidFort (includes security hardening)
@@ -34,6 +32,25 @@ services:
     networks:
       - backend
 
+  grafana:
+    image: grafana/grafana:13.0.0-23943897787-ubuntu
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD_FILE: /run/secrets/grafana_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    secrets:
+      - grafana_password
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
+
   # Examples of other services (kept commented for reference):
   # azurite:
   #   image: mcr.microsoft.com/azure-storage/azurite
@@ -56,6 +73,8 @@ services:
 volumes:
   pgdata:
     driver: local
+  grafana_data:
+    driver: local
 
 networks:
   backend:
@@ -64,3 +83,5 @@ networks:
 secrets:
   postgres_password:
     file: .secrets/postgres_password
+  grafana_password:
+    file: .secrets/grafana_password

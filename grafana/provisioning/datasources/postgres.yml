@@ -1,0 +1,17 @@
+# grafana/provisioning/datasources/postgres.yml
+
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL # display name in Grafana UI
+    type: postgres # tells Grafana which driver to use
+    url: postgres:5432 # service name from docker-compose + port
+    user: app # your DB user
+    secureJsonData:
+      password: ${POSTGRES_PASSWORD} # your DB password
+    jsonData:
+      database: dataplatform # your database name
+      sslmode: disable # no SSL since it's internal Docker network
+      postgresVersion: 1700 # PostgreSQL 17
+    isDefault: true # makes this the default datasource
+    editable: true # allows editing in the UI
