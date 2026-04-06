@@ -12,7 +12,7 @@ mkdir .secrets && cd .secrets
 echo "password123" > postgres_password
 echo "password123" > grafana_password
 
-echo "POSTGRES_PASSWORD=$(cat .secrets/postgres_password)" > .env
+echo "POSTGRES_PASSWORD=$(cat postgres_password)" > ../.env
 
 ```
 
