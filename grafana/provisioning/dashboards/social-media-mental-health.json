@@ -1,0 +1,175 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Social Media Usage and Mental Health Correlation",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "PCC52D03280B7034C"
+      },
+      "description": "This dataset studies how social media use affects the mental health of teenagers. It includes daily habits like social media hours, sleep, stress, anxiety, and physical activity.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 50,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "pointShape": "circle",
+            "pointSize": {
+              "fixed": 5
+            },
+            "pointStrokeWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "show": "points"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "green",
+                "value": 8
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 22,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mapping": "auto",
+        "series": [
+          {
+            "color": {
+              "matcher": {
+                "id": "byName",
+                "options": "mental_health_color"
+              }
+            },
+            "x": {
+              "matcher": {
+                "id": "byName",
+                "options": "Avg_Daily_Usage_Hours"
+              }
+            },
+            "y": {
+              "matcher": {
+                "id": "byName",
+                "options": "Mental_Health_Score"
+              }
+            }
+          }
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "13.0.0-23943897787",
+      "targets": [
+        {
+          "dataset": "dataplatform",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PCC52D03280B7034C"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    \"Student_ID\",\n    \"Avg_Daily_Usage_Hours\",\n    \"Mental_Health_Score\",\n    \"Mental_Health_Score\" * 1.0 AS mental_health_color\nFROM socials.v_mental_health_analysis;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "More Time Spent On Social Media, Lower Mental Health",
+      "transparent": true,
+      "type": "xychart"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "More Screen Time, Lower Mental Health",
+  "weekStart": "",
+  "version": 5,
+  "uid": "ad8qrvn",
+  "id": 1023650357714944
+}
