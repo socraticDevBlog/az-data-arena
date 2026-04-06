@@ -1,14 +1,29 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
 
-
 # azure data arena
 
 ## local environment
 
+### files to create and populate
+
+```bash
+
+mkdir .secrets && cd .secrets
+echo "password123" > postgres_password
+echo "password123" > grafana_password
+
+echo "POSTGRES_PASSWORD=$(cat .secrets/postgres_password)" > .env
+
+```
+
+### capabilities
+
 - postgresql
 - grafana
 
-ℹ️ use `make` command to execute stuff in this project
+### using the command line terminal
+
+ℹ️ use [gnu make](https://www.gnu.org/software/make/manual/make.html) commands to execute stuff in this project
 
 ```bash
 make
